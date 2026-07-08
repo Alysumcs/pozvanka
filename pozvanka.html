@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<!-- Svadobné oznámenie — Michal & Janka. Assety vlastné (assets/). Kód originálny. -->
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Michal & Janka · 12. júna 2027 — svadobné oznámenie</title>
+<meta name="description" content="Michal a Janka vás pozývajú na svadbu 12. júna 2027.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Michal & Janka · Náš svadobný deň">
+<meta property="og:description" content="Budeme sa brať. Klikni a otvor naše pozvanie.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Svadobné oznámenie — Michal & Janka
+   Assety: vlastné (v priečinku assets/). Kód: originálny.
+   ============================================================ */
+:root{
+  --cream:#F7F1E5; --cream-2:#EFE7D6; --paper:#FBF7EE;
+  --ink:#3A342A; --ink-soft:#5F5544;
+  --gold:#B08A4F; --gold-deep:#94713C; --gold-soft:#E4D2AC; --gold-line:#CBB587;
+  --rose:#C08A7E; --wine:#7A2338;
+  --line:#E4D8C0;
+  --display:"Cormorant Garamond",Georgia,serif;
+  --script:"Pinyon Script",cursive;
+  --body:"Jost",system-ui,sans-serif;
+  --frame:480px;
+}
+*{box-sizing:border-box}
+/* istota proti akémukoľvek rámiku na kontajneroch (input políčka to nezasiahne) */
+main,section,.rv,.content,.paper-card,.blk,.center{border:0!important;outline:0!important}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-weight:300;
+  font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.stage{max-width:var(--frame);margin:0 auto;background:var(--cream);position:relative;
+  min-height:100vh;min-height:100dvh;overflow:visible;overflow-x:clip}
+h1,h2,h3{margin:0;font-weight:400;font-family:var(--display)}
+.script{font-family:var(--script);line-height:1}
+section{padding:32px 22px;position:relative}
+.center{text-align:center}
+.eyebrow{font-family:var(--body);font-weight:400;font-size:11px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold-deep)}
+.lead{color:#4A4234;font-weight:400;font-size:16px;max-width:24ch;margin:14px auto 0}
+h2.title{font-size:clamp(26px,7.5vw,38px);font-style:italic;line-height:1.1;color:var(--gold-deep)}
+.flourish{display:block;height:26px;margin:12px auto;opacity:.9}
+
+/* ── OBÁLKA / intro ── */
+#cover{position:fixed;inset:0;z-index:100;background:radial-gradient(130% 90% at 50% 8%,#fbf6ea,#EFE7D6 60%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;
+  cursor:pointer;transition:opacity .9s ease,visibility .9s;overflow:hidden}
+#cover.gone{opacity:0;visibility:hidden;pointer-events:none}
+.cover-mono{font-family:var(--display);font-style:italic;font-size:15px;letter-spacing:.28em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:22px;transition:opacity .5s}
+#cover.playing .cover-mono,#cover.playing .cover-date,#cover.playing .tap{opacity:0}
+.env-wrap{position:relative;width:min(96vw,480px);max-height:92vh;aspect-ratio:440/782;border-radius:0;overflow:hidden;
+  box-shadow:0 46px 92px -34px rgba(58,52,42,.6);animation:cfloat 5s ease-in-out infinite}
+@keyframes cfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.env-wrap video,.env-wrap .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.env-wrap .poster{background:center/cover no-repeat;z-index:1}
+.env-wrap video{z-index:2;opacity:0;transition:opacity .4s}
+#cover.playing .env-wrap video{opacity:1}
+.cover-date{margin-top:22px;font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--ink-soft);transition:opacity .5s}
+.tap{position:absolute;left:0;right:0;bottom:29%;z-index:4;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);pointer-events:none;transition:opacity .5s;animation:tapPulse 1.9s ease-in-out infinite}
+.tap svg{color:var(--gold)}
+@keyframes tapPulse{0%,100%{opacity:.5;transform:translateY(2px)}50%{opacity:1;transform:translateY(-2px)}}
+
+#main{opacity:0;transition:opacity 1s ease}
+#main.show{opacity:1}
+
+/* padajúce lupienky */
+#petals{position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:var(--frame);pointer-events:none;z-index:40;overflow:hidden}
+.petal{position:absolute;top:-6%;will-change:transform,opacity}
+
+/* ── HERO ── */
+.hero{position:relative;aspect-ratio:9/16;min-height:unset;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:13% 22px 0;overflow:visible}
+.hero .bg,.hero video.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+.hero .bg{background:center/cover no-repeat}
+.hero video.bg{opacity:0;transition:opacity 1.6s ease}
+.hero.video-on video.bg{opacity:1}
+.hero .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(247,241,229,.78),rgba(247,241,229,.34) 30%,rgba(247,241,229,.06) 52%,transparent 68%,transparent 84%,rgba(247,241,229,.55))}
+.hero .content{position:relative;z-index:2;margin-top:150px}
+.hero .wed{font-family:var(--display);font-style:italic;font-size:15px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-deep);text-shadow:0 1px 3px rgba(58,52,42,.45),0 1px 14px rgba(247,241,229,.9)}
+.hero .names{font-family:var(--script);font-size:clamp(40px,13vw,64px);line-height:.9;color:var(--gold-deep);margin:10px 0;text-shadow:0 2px 4px rgba(58,52,42,.35),0 2px 26px rgba(247,241,229,.95)}
+.hero .names .amp{display:block;font-family:var(--display);font-style:italic;font-size:.3em;color:var(--rose);margin:2px 0}
+.hero .date{margin:2px 0 6px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink);text-shadow:0 1px 3px rgba(58,52,42,.4),0 1px 12px rgba(247,241,229,.9)}
+
+.scrolld{position:absolute;bottom:78px;left:50%;transform:translateX(-50%);z-index:7;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#fff;display:flex;flex-direction:column;align-items:center;gap:7px;opacity:.95;text-shadow:0 1px 4px rgba(0,0,0,.55),0 0 6px rgba(0,0,0,.35);animation:scrollPulse 1.8s ease-in-out infinite}
+.scrolld .chev{width:11px;height:11px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg);filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}@keyframes scrollPulse{0%,100%{transform:translateX(-50%) translateY(0);opacity:.5}50%{transform:translateX(-50%) translateY(6px);opacity:1}}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ── papierová karta ── */
+/* papierová karta — úhľadná v stĺpci, roztrhané hore/dole, stred bez skreslenia */
+.paper-card{position:relative;width:calc(100% + 44px);margin-left:-22px;margin-right:-22px;padding:54px 34px;z-index:2;border:0;background:none}
+
+/* kvety v rohoch — usadené v rohu, mierne cez okraj (nie vtiahnuté dovnútra) */
+.paper-card .corner{width:180px}
+.paper-card .corner.tl{top:-16px;left:-6px}
+.paper-card .corner.tr{top:-16px;right:-6px}
+.paper-card .corner.bl{bottom:-16px;left:-6px}
+.paper-card .corner.br{bottom:-16px;right:-6px}
+
+/* kvetinové rohy — predorientované, iba pulzovanie (bez prevracania) */
+.corner{position:absolute;width:128px;z-index:3;pointer-events:none;animation:pulse 4.5s ease-in-out infinite}
+.corner.tl{top:-24px;left:-18px;transform-origin:top left}
+.corner.tr{top:70px;right:-18px;transform-origin:top right}
+.corner.bl{bottom:70px;left:-18px;transform-origin:bottom left}
+.corner.br{bottom:-24px;right:-18px;transform-origin:bottom right}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.95}50%{transform:scale(1.06);opacity:1}}
+/* kvety cez oba spodné rohy (hero, pätička) */
+
+
+
+.quote{font-family:var(--display);font-style:italic;font-size:clamp(22px,6vw,28px);line-height:1.4;color:var(--gold-deep)}
+.quote span{display:block}
+
+/* ── countdown ── */
+.cd{display:flex;justify-content:center;gap:8px;margin-top:20px}
+.cd .u{min-width:60px}
+.cd .box{font-family:var(--display);font-size:clamp(38px,12vw,50px);line-height:1;color:var(--gold-deep);background:none;border:0;padding:2px}
+.cd .lbl{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+.cd .sep{align-self:center;font-family:var(--display);font-size:24px;color:var(--gold-line)}
+
+/* ── program / timeline s pohyblivou ružou ── */
+.tl{position:relative;max-width:330px;margin:26px auto 0;padding:8px 0}
+.tl-line{position:absolute;left:50%;top:18px;bottom:18px;width:1px;background:linear-gradient(var(--gold-soft),var(--gold-line),var(--gold-soft));transform:translateX(-50%)}
+.tl-rose{position:absolute;left:50%;top:0;width:48px;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 6px 10px rgba(58,52,42,.35));transition:top .1s linear}
+.tl-row{position:relative;display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;gap:6px;padding:18px 0;min-height:56px}
+.tl-row .t{text-align:right;font-family:var(--display);font-size:22px;color:var(--gold-deep)}
+.tl-row .dot{justify-self:center;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--cream)}
+.tl-row .e{text-align:left;font-size:15px;color:var(--ink)}
+.tl-row .e small{display:block;color:var(--ink-soft);font-size:12.5px}
+
+/* ── location ── */
+.zamok{display:block;width:min(88%,320px);margin:6px auto 0}
+.mapwrap{width:min(100%,300px);aspect-ratio:1/1;margin:6px auto 0;border:2px solid var(--gold);border-radius:8px;overflow:hidden;box-shadow:0 8px 22px -10px rgba(58,52,42,.45)}.map-mark{color:var(--gold);text-align:center;font-size:15px;letter-spacing:.3em;line-height:1;margin:14px 0 4px;opacity:.9}.map-mark.bot{margin:8px 0 0}
+.mapwrap iframe{width:100%;height:100%;border:0;display:block;filter:sepia(.28) saturate(.9) contrast(.98)}
+/* nadpis s bočnými flourishmi */
+.deco-title{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto}
+.deco-title .de{width:52px;height:auto;flex:none;opacity:.92}
+.deco-title h2{margin:0}
+.addr{margin-top:12px;font-size:14px;color:var(--ink-soft)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:400;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  padding:13px 26px;border-radius:100px;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s,color .2s;
+  border:1px solid var(--gold);color:var(--gold-deep);background:transparent}
+.btn:hover{background:var(--gold);color:#fff;transform:translateY(-2px);box-shadow:0 12px 24px -10px rgba(176,138,79,.7)}
+.btn:active{transform:translateY(0)}
+.btn--fill{background:var(--wine);color:#fff;border-color:var(--wine)}
+.btn--fill:hover{background:#5f1a2b}
+
+/* dress code paleta */
+.palette{display:flex;justify-content:center;gap:14px;margin-top:16px;flex-wrap:wrap}
+.sw .dot{width:42px;height:42px;border-radius:50%;box-shadow:0 6px 14px -6px rgba(58,52,42,.5);margin:0 auto;border:1px solid rgba(0,0,0,.06)}
+.sw .nm{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+.blk{margin-top:16px}
+.blk h3{font-family:var(--display);font-style:italic;font-size:23px;color:var(--gold-deep);margin-bottom:6px}
+.blk p{margin:0 auto;font-size:15px;color:#4A4234;max-width:24ch}
+
+/* ── RSVP ── */
+.seal{width:150px;margin:22px auto 0;cursor:pointer;display:block;transition:transform .25s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 10px 16px rgba(58,52,42,.4))}
+.seal:hover{transform:scale(1.08) rotate(-4deg)}.seal:active{transform:scale(.96)}
+.seal-hint{font-family:var(--display);font-style:italic;font-size:15px;color:var(--gold-deep);margin-top:10px;display:inline-flex;flex-direction:column;align-items:center;gap:3px;animation:hintUp 1.7s ease-in-out infinite}
+.seal-hint svg{color:var(--gold)}
+@keyframes hintUp{0%,100%{transform:translateY(5px);opacity:.5}50%{transform:translateY(-3px);opacity:1}}
+.modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(40,34,26,.55);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.modal.open{opacity:1;visibility:visible}
+.sheet{background:var(--paper);width:min(92vw,430px);border:1px solid var(--gold-soft);border-radius:16px;padding:26px 22px calc(24px + env(safe-area-inset-bottom));max-height:88vh;overflow-y:auto;transform:translateY(14px) scale(.97);opacity:.5;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s;text-align:left;box-shadow:0 40px 90px -30px rgba(30,20,14,.7)}
+.modal.open .sheet{transform:none;opacity:1}
+.sheet .x{position:sticky;top:0;float:right;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--cream);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--ink-soft)}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:7px}
+.in{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:var(--cream);font-family:var(--body);font-weight:300;font-size:16px;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+.in:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(176,138,79,.16)}
+textarea.in{resize:vertical;min-height:54px}
+.seg{display:flex;gap:10px}
+.seg label{flex:1;cursor:pointer;margin:0}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg .opt{display:block;text-align:center;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--cream);font-size:14px;transition:.2s}
+.seg input:checked + .opt{background:var(--wine);color:#fff;border-color:var(--wine)}
+.rsvp-thanks{display:none;text-align:center;padding:18px 0}
+.rsvp-thanks.show{display:block}
+.rsvp-thanks .big{font-family:var(--script);font-size:44px;color:var(--gold-deep);line-height:1}
+
+/* ── footer ── */
+
+footer .fnames{font-family:var(--script);font-size:50px;color:var(--gold-deep);line-height:1;position:relative;z-index:2}
+.credit{margin-top:34px;font-size:11px;letter-spacing:.12em;color:var(--ink-soft);position:relative;z-index:2}
+.credit a{color:var(--gold-deep);text-decoration:none;font-weight:500}
+.credit .heart{color:var(--rose)}
+
+/* ── hudba ── */
+.music{position:fixed;z-index:60;right:calc(50% - var(--frame)/2 + 16px);bottom:16px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold-line);background:rgba(251,247,238,.92);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 22px -10px rgba(58,52,42,.6);opacity:0;transform:scale(.7);transition:.4s}
+@media(max-width:512px){.music{right:16px}}
+.music.show{opacity:1;transform:none}
+.music .bars{display:flex;gap:2.5px;align-items:flex-end;height:15px}
+.music .bars i{width:2.5px;background:var(--gold-deep);height:6px;border-radius:2px;animation:eq 1s ease-in-out infinite}
+.music .bars i:nth-child(2){animation-delay:.2s}.music .bars i:nth-child(3){animation-delay:.4s}.music .bars i:nth-child(4){animation-delay:.15s}
+.music.paused .bars i{animation-play-state:paused;height:5px}
+@keyframes eq{0%,100%{height:5px}50%{height:14px}}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .petal,.corner,.crown,.env-wrap,.scrolld,.tap .chev,.music,.tl-rose{animation:none!important;transition:none}
+  #petals{display:none}
+}
+
+footer{position:relative;margin-top:-30px;padding:0 0 calc(16px + env(safe-area-inset-bottom));text-align:center;overflow:visible}.footer-hero{position:relative;width:100%;overflow:visible}.footer-hero .couple-full{display:block;width:100%;margin-top:-40%}.footer-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 28%,rgba(58,52,42,.18) 55%,rgba(58,52,42,.62))}.footer-txt{position:relative;text-align:center;padding:12px 18px 8px}.footer-txt .eyebrow{font-family:var(--body);font-weight:400;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-deep)}.footer-txt .fnames{font-family:var(--script);color:var(--gold-deep);font-size:clamp(36px,10vw,50px);line-height:1;margin-top:4px}footer .credit{margin-top:22px;padding:0 24px}.paper-sheet{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:-1;filter:drop-shadow(0 12px 30px rgba(90,68,44,.22))}.paper-card.tuck{margin-top:-72px}.hero-flower{position:absolute;bottom:-72px;width:clamp(168px,50%,240px);z-index:6;pointer-events:none;transform-origin:bottom center;animation:sway 6s ease-in-out infinite}.hero-flower.hf-l{left:-16px;bottom:-104px}.hero-flower.hf-r{right:-18px;bottom:-110px;animation-delay:-3s}@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}@keyframes swayR{0%,100%{transform:scaleX(-1) rotate(-5deg)}50%{transform:scaleX(-1) rotate(5deg)}}.footer-flowers{position:absolute;left:50%;bottom:-46px;width:112%;max-width:620px;z-index:3;pointer-events:none;transform:translateX(-50%);transform-origin:bottom center;animation:floatY 5s ease-in-out infinite}@keyframes floatY{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ░ OBÁLKA ░ -->
+  <div id="cover">
+    <div class="env-wrap">
+      <div class="poster" style="background-image:url(assets/obalka.webp)"></div>
+      <video id="openVid" playsinline muted preload="auto" poster="assets/obalka.webp">
+        <source src="assets/obalka-open3.mp4" type="video/mp4">
+      </video>
+      <div class="tap" id="tapHint">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 15l6-6 6 6"/></svg>
+        <span>Klikni pre otvorenie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- hudba (skryté video = audio zdroj) -->
+  <video id="bgm" src="assets/hudba.mp4" loop preload="auto" style="display:none" playsinline></video>
+  <button class="music paused" id="music" aria-label="Zapnúť / vypnúť hudbu"><div class="bars"><i></i><i></i><i></i><i></i></div></button>
+
+  <div id="petals" aria-hidden="true"></div>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="bg" style="background-image:url(assets/hero-poster.webp)"></div>
+      <video class="bg" id="heroVid" muted loop playsinline preload="auto" poster="assets/hero-poster.webp">
+        <source src="assets/hero-video.mp4" type="video/mp4">
+      </video>
+      <div class="scrim"></div>
+      <div class="content">
+        <div class="wed">Náš svadobný deň</div>
+        <div class="date">Sobota · 12. júna 2027</div>
+        <div class="names script">Michal<span class="amp">&amp;</span>Janka</div>
+      </div>
+      <img class="hero-flower hf-l" src="assets/lavy-spodny-roh.webp" alt="" aria-hidden="true">
+      <img class="hero-flower hf-r" src="assets/pravy-spodny-roh.webp" alt="" aria-hidden="true">
+      <div class="scrolld">Skroluj<span class="chev"></span></div>
+    </section>
+
+    <!-- INVOKÁCIA -->
+    <section class="center" style="padding-top:26px">
+      <div class="rv">
+        <div class="paper-card p2 bleed tuck">
+        <img class="paper-sheet" src="assets/papier-fw.webp" alt="" aria-hidden="true">
+          <p class="quote"><span>Dve srdcia,</span><span>jeden príbeh,</span><span>celý život pred nami.</span></p>
+          <p class="lead" style="margin-top:16px">Milí naši — s láskou vás pozývame, aby ste boli pri tom, keď si povieme svoje áno. Príďte s nami osláviť deň, na ktorý budeme spomínať celý život.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="center">
+      <div class="rv">
+        <div class="eyebrow">Odpočítavame</div>
+        <img class="flourish" src="assets/acomm-decor.png" alt="" aria-hidden="true">
+        <div class="cd" id="cd" data-date="2027-06-12T15:00:00+02:00">
+          <div class="u"><div class="box" id="cd-d">–</div><div class="lbl">dní</div></div>
+          <div class="sep">:</div>
+          <div class="u"><div class="box" id="cd-h">–</div><div class="lbl">hodín</div></div>
+          <div class="sep">:</div>
+          <div class="u"><div class="box" id="cd-m">–</div><div class="lbl">minút</div></div>
+          <div class="sep">:</div>
+          <div class="u"><div class="box" id="cd-s">–</div><div class="lbl">sekúnd</div></div>
+        </div>
+        <p class="lead" style="margin-top:18px">…kým si povieme áno.</p>
+      </div>
+    </section>
+
+    <!-- PROGRAM -->
+    <section class="center">
+      <div class="rv">
+        <div class="paper-card">
+        <img class="paper-sheet" src="assets/papier-fw.webp" alt="" aria-hidden="true">
+          <div class="deco-title"><img class="de" src="assets/left-element_1.png" alt="" aria-hidden="true"><h2 class="title">Program dňa</h2><img class="de" src="assets/right-element_1.png" alt="" aria-hidden="true"></div>
+          <div class="tl" id="tl">
+            <div class="tl-line"></div>
+            <img class="tl-rose" id="tlRose" src="assets/rose.webp" alt="" aria-hidden="true">
+            <div class="tl-row"><div class="t">15:00</div><div class="dot"></div><div class="e">Príchod hostí<small>Uvítací prípitok</small></div></div>
+            <div class="tl-row"><div class="t">16:00</div><div class="dot"></div><div class="e">Obrad<small>Nádvorie kaštieľa</small></div></div>
+            <div class="tl-row"><div class="t">17:00</div><div class="dot"></div><div class="e">Prípitok &amp; fotenie<small>V záhrade</small></div></div>
+            <div class="tl-row"><div class="t">19:00</div><div class="dot"></div><div class="e">Slávnostná večera<small>Zrkadlová sála</small></div></div>
+            <div class="tl-row"><div class="t">20:30</div><div class="dot"></div><div class="e">Prvý tanec &amp; zábava<small>Do rána</small></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MIESTO -->
+    <section class="center">
+      <div class="rv">
+        <div class="eyebrow">Kde nás nájdete</div>
+        <img class="zamok" src="assets/zamok.webp" alt="Kaštieľ" aria-hidden="true">
+        <div class="deco-title" style="margin-top:6px"><img class="de" src="assets/left-element_1.png" alt="" aria-hidden="true"><h2 class="title">Kaštieľ Appony</h2><img class="de" src="assets/right-element_1.png" alt="" aria-hidden="true"></div>
+        <p class="lead">Barokový kaštieľ obklopený anglickým parkom v Oponiciach pri Topoľčanoch.</p>
+        <div class="map-mark">✦ ❖ ✦</div>
+        <div class="mapwrap">
+          <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Ka%C5%A1tie%C4%BE%20Appony%20Oponice&output=embed" title="Mapa — Kaštieľ Appony"></iframe>
+        </div>
+        <div class="map-mark bot">✦ ❖ ✦</div>
+        <p class="addr">Oponice 271, 956 14 Oponice · parkovanie v areáli</p>
+      </div>
+    </section>
+
+    <!-- DRESS CODE + DARY -->
+    <section class="center">
+      <div class="rv">
+        <div class="paper-card p2 bleed">
+        <img class="paper-sheet" src="assets/papier-fw.webp" alt="" aria-hidden="true">
+        <img class="corner tr" src="assets/pravy-vrchny-roh.webp" alt="" aria-hidden="true">
+        <img class="corner bl" src="assets/lavy-roh.webp" alt="" aria-hidden="true">
+          <div class="blk">
+            <h3>Dress code</h3>
+            <p>Formálne oblečenie v jemných, prírodných tónoch. Prosíme, vyhnite sa bielej — tú necháme neveste.</p>
+            <div class="palette">
+              <div class="sw"><div class="dot" style="background:#EFE5D2"></div><div class="nm">Krémová</div></div>
+              <div class="sw"><div class="dot" style="background:#D9C39A"></div><div class="nm">Šampanská</div></div>
+              <div class="sw"><div class="dot" style="background:#B08A4F"></div><div class="nm">Zlatá</div></div>
+              <div class="sw"><div class="dot" style="background:#8B9A6E"></div><div class="nm">Šalviová</div></div>
+              <div class="sw"><div class="dot" style="background:#C08A7E"></div><div class="nm">Púdrová</div></div>
+            </div>
+          </div>
+          <div class="blk" style="margin-top:30px">
+            <h3>Dary</h3>
+            <p>Vašou prítomnosťou nám urobíte najväčšiu radosť. Ak nás chcete potešiť, uvítame príspevok do svadobnej pokladničky namiesto kvetov.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="center">
+      <div class="rv">
+        <div class="eyebrow">Potvrdenie účasti</div>
+        <div class="deco-title" style="margin-top:8px"><img class="de" src="assets/left-element_1.png" alt="" aria-hidden="true"><h2 class="title">Prídete to osláviť s nami?</h2><img class="de" src="assets/right-element_1.png" alt="" aria-hidden="true"></div>
+        <p class="lead">Dajte nám prosím vedieť do 30. apríla 2027.</p>
+        <img class="seal" id="sealBtn" src="assets/RSVP-pecat.webp" alt="Otvoriť RSVP" role="button">
+        <div class="seal-hint" id="sealHint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="16" height="16"><path d="M6 15l6-6 6 6"/></svg><span>Ťukni na pečať a potvrď</span></div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="rv">
+      <div class="footer-txt">
+        <div class="eyebrow">Tešíme sa na vás</div>
+        <div class="fnames">Michal &amp; Janka</div>
+      </div>
+      <div class="footer-hero">
+        <img class="couple-full" src="assets/svadobcania.webp" alt="Michal a Janka">
+        <img class="footer-flowers" src="assets/kvetiny-spodny%20roh-video-hero.png" alt="" aria-hidden="true">
+      </div>
+      <div class="credit">Vyrobené s <span class="heart">♥</span> · <a href="https://alysum.sk/svadby" target="_blank" rel="noopener">alysum.sk</a></div>
+    </footer>
+
+  </main>
+
+  <!-- RSVP MODAL -->
+  <div class="modal" id="rsvpModal" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Potvrdenie účasti">
+      <div class="x" id="rsvpClose" role="button" aria-label="Zavrieť">✕</div>
+      <div style="clear:both"></div>
+      <div class="center" style="margin-bottom:16px">
+        <div class="eyebrow">Potvrďte účasť</div>
+        <div class="deco-title" style="margin-top:6px"><img class="de" src="assets/left-element_1.png" alt="" aria-hidden="true"><h2 class="title" style="font-size:24px">Do 30. apríla 2027</h2><img class="de" src="assets/right-element_1.png" alt="" aria-hidden="true"></div>
+      </div>
+      <form id="rsvp" novalidate>
+        <div class="field"><label>Vaše meno</label><input class="in" id="r-name" type="text" placeholder="Meno a priezvisko" required></div>
+        <div class="field"><label>Prídete?</label>
+          <div class="seg">
+            <label><input type="radio" name="go" value="ano" checked><span class="opt">S radosťou prídem</span></label>
+            <label><input type="radio" name="go" value="nie"><span class="opt">Bohužiaľ nemôžem</span></label>
+          </div>
+        </div>
+        <div class="field"><label>Počet hostí</label>
+          <select class="in" id="r-count"><option>1</option><option>2</option><option>3</option><option>4</option></select>
+        </div>
+        <div class="field"><label>Pieseň, pri ktorej sa neudržíte na parkete</label><input class="in" id="r-song" type="text" placeholder="Interpret — názov"></div>
+        <div class="field"><label>Deti (mená a vek)</label><textarea class="in" id="r-kids" placeholder="Napr. Elka (5), Jakub (8)"></textarea></div>
+        <div class="field"><label>Alergie / stravovanie</label><input class="in" id="r-diet" type="text" placeholder="Napr. bezlepkové, vegetariánske"></div>
+        <button type="submit" class="btn btn--fill" style="width:100%;justify-content:center;margin-top:4px">Odoslať potvrdenie</button>
+      </form>
+      <div class="rsvp-thanks" id="rsvpThanks">
+        <div class="big">Ďakujeme!</div>
+        <p class="lead">Vaše potvrdenie sme zaznamenali. Tešíme sa na vás. ♥</p>
+        <button class="btn" id="rsvpDone" style="margin-top:14px">Zavrieť</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+<script>
+/* ============================================================
+   Svadobné oznámenie — Michal & Janka (app.js) — vlastný kód
+   ============================================================ */
+(function(){
+  'use strict';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cover=document.getElementById('cover'),
+      main=document.getElementById('main'),
+      music=document.getElementById('music'),
+      openVid=document.getElementById('openVid'),
+      heroVid=document.getElementById('heroVid'),
+      hero=document.getElementById('hero'),
+      bgm=document.getElementById('bgm');
+  var opened=false, playing=false;
+
+  /* ── Otvorenie obálky ── */
+  function reveal(){
+    if(!cover) return;
+    cover.classList.add('gone');
+    if(main) main.classList.add('show');
+    if(music) music.classList.add('show');
+    document.body.style.overflow='auto';
+    startPetals();
+    playHero();
+  }
+  function open(){
+    if(opened) return; opened=true;
+    if(cover) cover.classList.add('playing');
+    playMusic();
+    var done=false;
+    function go(){ if(done) return; done=true; reveal(); }
+    if(openVid){
+      var p=openVid.play(); if(p&&p.catch)p.catch(function(){});
+      openVid.addEventListener('ended',go);
+      setTimeout(go, 3200);
+    }else{
+      setTimeout(go, 700);
+    }
+  }
+  if(cover){ document.body.style.overflow='hidden'; cover.addEventListener('click',open); }
+
+  /* ── Hero: statické → potom video ── */
+  function playHero(){
+    if(!heroVid||!hero) return;
+    setTimeout(function(){
+      var p=heroVid.play();
+      if(p&&p.then){ p.then(function(){ hero.classList.add('video-on'); }).catch(function(){}); }
+      else { hero.classList.add('video-on'); }
+    }, 500);
+  }
+
+  /* ── Hudba ── */
+  function playMusic(){ if(!bgm) return; try{ bgm.volume=.7; var p=bgm.play(); if(p&&p.then){ p.then(function(){ playing=true; music&&music.classList.remove('paused'); }).catch(function(){}); } }catch(e){} }
+  function pauseMusic(){ if(!bgm) return; bgm.pause(); playing=false; music&&music.classList.add('paused'); }
+  if(music) music.addEventListener('click',function(){ playing?pauseMusic():playMusic(); });
+
+  /* ── Padajúce lupienky (ružové) ── */
+  var PCOLS=['#E3A79B','#D98C86','#E8B7A8','#CE8578','#EBC9B6','#C77F70'];
+  function petalSVG(s,c){
+    return '<svg width="'+s+'" height="'+(s*1.08)+'" viewBox="0 0 24 26">'
+      +'<path d="M12 25C4.5 19.5 1.8 12.5 4 7.6 5.6 3.8 9 3 12 6 15 3 18.4 3.8 20 7.6 22.2 12.5 19.5 19.5 12 25Z" fill="'+c+'"/>'
+      +'<path d="M12 24.4C9.2 18.6 8.3 12.6 9.3 7.8" stroke="rgba(255,255,255,.28)" stroke-width="1" fill="none"/>'
+      +'<path d="M12 6.4C13.6 4.6 16 4.8 17.6 7.4" stroke="rgba(255,255,255,.32)" stroke-width="1" fill="none"/>'
+      +'</svg>';
+  }
+  function startPetals(){
+    if(reduce) return;
+    var box=document.getElementById('petals'); if(!box) return;
+    var N=window.innerWidth<420?11:16;
+    for(var i=0;i<N;i++) spawn(i*520,i);
+    function spawn(delay,i){
+      setTimeout(function(){
+        var p=document.createElement('div'); p.className='petal';
+        var depth=Math.random(), s=(14-depth*6)+Math.random()*4, c=PCOLS[Math.floor(Math.random()*PCOLS.length)];
+        p.style.left=(Math.random()*100)+'%'; p.style.filter=depth>.7?'blur(1.3px)':'none'; p.style.opacity=(1-depth*.4);
+        p.innerHTML=petalSVG(s,c); box.appendChild(p);
+        var dur=(9000+Math.random()*6000)*(0.7+depth*0.6), drift=(Math.random()*80-40), rot=Math.random()*900-450, ph=Math.random()*6, start=performance.now();
+        (function fall(now){
+          var t=(now-start)/dur; if(t>=1){ p.remove(); spawn(0,i); return; }
+          var y=t*(window.innerHeight+50), x=Math.sin(t*5+ph)*drift;
+          p.style.transform='translate('+x+'px,'+y+'px) rotate('+(rot*t)+'deg)';
+          requestAnimationFrame(fall);
+        })(start);
+      },delay);
+    }
+  }
+
+  /* ── Countdown ── */
+  (function(){
+    var el=document.getElementById('cd'); if(!el) return;
+    var target=new Date(el.dataset.date).getTime();
+    var d=document.getElementById('cd-d'),h=document.getElementById('cd-h'),m=document.getElementById('cd-m'),s=document.getElementById('cd-s');
+    function tick(){
+      var diff=target-Date.now(); if(diff<0)diff=0;
+      d.textContent=Math.floor(diff/864e5);
+      h.textContent=String(Math.floor(diff%864e5/36e5)).padStart(2,'0');
+      m.textContent=String(Math.floor(diff%36e5/6e4)).padStart(2,'0');
+      s.textContent=String(Math.floor(diff%6e4/1e3)).padStart(2,'0');
+    }
+    tick(); setInterval(tick,1000);
+  })();
+
+  /* ── Pohyblivá ruža na časovej osi (podľa scrollu) ── */
+  (function(){
+    var tl=document.getElementById('tl'), rose=document.getElementById('tlRose'), lineTop=18, ticking=false;
+    if(!tl||!rose) return;
+    function upd(){
+      var r=tl.getBoundingClientRect(), vh=window.innerHeight;
+      var prog=(vh - r.top)/(vh + r.height);
+      prog=Math.max(0,Math.min(1,prog));
+      var usable=r.height-2*lineTop;
+      rose.style.top=(lineTop + prog*usable)+'px';
+      ticking=false;
+    }
+    window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(upd); } },{passive:true});
+    window.addEventListener('resize',upd); upd();
+  })();
+
+  /* ── RSVP modal ── */
+  (function(){
+    var modal=document.getElementById('rsvpModal'); if(!modal) return;
+    var openB=document.getElementById('sealBtn'), closeB=document.getElementById('rsvpClose'),
+        doneB=document.getElementById('rsvpDone'), f=document.getElementById('rsvp'), thanks=document.getElementById('rsvpThanks');
+    function op(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
+    function cl(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+    if(openB) openB.addEventListener('click',op);
+    if(closeB) closeB.addEventListener('click',cl);
+    if(doneB) doneB.addEventListener('click',cl);
+    modal.addEventListener('click',function(e){ if(e.target===modal)cl(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape')cl(); });
+    if(f) f.addEventListener('submit',function(e){ e.preventDefault();
+      if(document.getElementById('r-name').value.trim().length<2){ document.getElementById('r-name').focus(); return; }
+      f.style.display='none'; thanks.classList.add('show');
+    });
+  })();
+
+  /* ── Scroll reveal ── */
+  (function(){
+    var els=document.querySelectorAll('.rv');
+    if(!('IntersectionObserver'in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+    var io=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } }); },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){ io.observe(e); });
+  })();
+})();
+
+</script>
+</body>
+</html>
