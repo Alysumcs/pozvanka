@@ -34,9 +34,9 @@
 main,section,.rv,.content,.paper-card,.blk,.center{border:0!important;outline:0!important}
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-weight:300;
-  font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:clip}
+  font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
 .stage{max-width:var(--frame);margin:0 auto;background:var(--cream);position:relative;
-  min-height:100vh;min-height:100dvh;overflow:visible;overflow-x:clip}
+  min-height:100vh;min-height:100dvh;overflow:visible}
 h1,h2,h3{margin:0;font-weight:400;font-family:var(--display)}
 .script{font-family:var(--script);line-height:1}
 section{padding:32px 22px;position:relative}
@@ -92,7 +92,7 @@ h2.title{font-size:clamp(26px,7.5vw,38px);font-style:italic;line-height:1.1;colo
 
 /* ── papierová karta ── */
 /* papierová karta — úhľadná v stĺpci, roztrhané hore/dole, stred bez skreslenia */
-.paper-card{position:relative;width:calc(100% + 120px);margin-left:-60px;margin-right:-60px;padding:54px 46px;z-index:2;border:0;background:none}
+.paper-card{position:relative;width:calc(100% + 44px);margin-left:-22px;margin-right:-22px;padding:54px 34px;z-index:2;border:0;background:none}
 
 /* kvety v rohoch — usadené v rohu, mierne cez okraj (nie vtiahnuté dovnútra) */
 .paper-card .corner{width:180px}
@@ -104,8 +104,8 @@ h2.title{font-size:clamp(26px,7.5vw,38px);font-style:italic;line-height:1.1;colo
 /* kvetinové rohy — predorientované, iba pulzovanie (bez prevracania) */
 .corner{position:absolute;width:128px;z-index:3;pointer-events:none;animation:pulse 4.5s ease-in-out infinite}
 .corner.tl{top:-24px;left:-18px;transform-origin:top left}
-.corner.tr{top:70px;right:-18px;transform-origin:top right}
-.corner.bl{bottom:70px;left:-18px;transform-origin:bottom left}
+.corner.tr{top:112px;right:-10px;transform-origin:top right}
+.corner.bl{bottom:118px;left:26px;transform-origin:bottom left}
 .corner.br{bottom:-24px;right:-18px;transform-origin:bottom right}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:.95}50%{transform:scale(1.06);opacity:1}}
 /* kvety cez oba spodné rohy (hero, pätička) */
@@ -208,7 +208,7 @@ footer .fnames{font-family:var(--script);font-size:50px;color:var(--gold-deep);l
   #petals{display:none}
 }
 
-footer{position:relative;margin-top:-30px;padding:0 0 calc(16px + env(safe-area-inset-bottom));text-align:center;overflow:visible}.footer-hero{position:relative;width:100%;overflow:visible}.footer-hero .couple-full{display:block;width:100%;margin-top:-40%}.footer-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 28%,rgba(58,52,42,.18) 55%,rgba(58,52,42,.62))}.footer-txt{position:relative;text-align:center;padding:12px 18px 8px}.footer-txt .eyebrow{font-family:var(--body);font-weight:400;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-deep)}.footer-txt .fnames{font-family:var(--script);color:var(--gold-deep);font-size:clamp(36px,10vw,50px);line-height:1;margin-top:4px}footer .credit{margin-top:22px;padding:0 24px}.paper-sheet{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:-1}.paper-card.tuck{margin-top:-72px}.hero-flower{position:absolute;bottom:-72px;width:clamp(168px,50%,240px);z-index:6;pointer-events:none;transform-origin:bottom center;animation:sway 6s ease-in-out infinite}.hero-flower.hf-l{left:-16px;bottom:-104px}.hero-flower.hf-r{right:-18px;bottom:-110px;animation-delay:-3s}@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}@keyframes swayR{0%,100%{transform:scaleX(-1) rotate(-5deg)}50%{transform:scaleX(-1) rotate(5deg)}}.footer-flowers{position:absolute;left:50%;bottom:-46px;width:112%;max-width:620px;z-index:3;pointer-events:none;transform:translateX(-50%);transform-origin:bottom center;animation:floatY 5s ease-in-out infinite}@keyframes floatY{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}</style>
+footer{position:relative;margin-top:-30px;padding:0 0 calc(16px + env(safe-area-inset-bottom));text-align:center;overflow:visible}.footer-hero{position:relative;width:100%;overflow:visible}.footer-hero .couple-full{display:block;width:100%;margin-top:-40%}.footer-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 28%,rgba(58,52,42,.18) 55%,rgba(58,52,42,.62))}.footer-txt{position:relative;text-align:center;padding:12px 18px 8px}.footer-txt .eyebrow{font-family:var(--body);font-weight:400;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-deep)}.footer-txt .fnames{font-family:var(--script);color:var(--gold-deep);font-size:clamp(36px,10vw,50px);line-height:1;margin-top:4px}footer .credit{margin-top:22px;padding:0 24px}.paper-sheet{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:-1}.paper-card.tuck{margin-top:-72px}.hero-flower{position:absolute;bottom:-72px;width:clamp(168px,50%,240px);z-index:6;pointer-events:none;transform-origin:bottom center;animation:sway 6s ease-in-out infinite}.hero-flower.hf-l{left:-8px;bottom:-104px}.hero-flower.hf-r{right:-8px;bottom:-110px;animation-delay:-3s}@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}@keyframes swayR{0%,100%{transform:scaleX(-1) rotate(-5deg)}50%{transform:scaleX(-1) rotate(5deg)}}.footer-flowers{position:absolute;left:50%;bottom:-46px;width:104%;max-width:600px;z-index:3;pointer-events:none;transform:translateX(-50%);transform-origin:bottom center;animation:floatY 5s ease-in-out infinite}@keyframes floatY{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}</style>
 </head>
 <body>
 <div class="stage">
@@ -256,7 +256,7 @@ footer{position:relative;margin-top:-30px;padding:0 0 calc(16px + env(safe-area-
     <section class="center" style="padding-top:26px">
       <div class="rv">
         <div class="paper-card p2 bleed tuck">
-        <img class="paper-sheet" src="assets/papier-light.webp" alt="" aria-hidden="true">
+        <img class="paper-sheet" src="assets/papier-fw.webp" alt="" aria-hidden="true">
           <p class="quote"><span>Dve srdcia,</span><span>jeden príbeh,</span><span>celý život pred nami.</span></p>
           <p class="lead" style="margin-top:16px">Milí naši — s láskou vás pozývame, aby ste boli pri tom, keď si povieme svoje áno. Príďte s nami osláviť deň, na ktorý budeme spomínať celý život.</p>
         </div>
@@ -285,7 +285,7 @@ footer{position:relative;margin-top:-30px;padding:0 0 calc(16px + env(safe-area-
     <section class="center">
       <div class="rv">
         <div class="paper-card">
-        <img class="paper-sheet" src="assets/papier-light.webp" alt="" aria-hidden="true">
+        <img class="paper-sheet" src="assets/papier-fw.webp" alt="" aria-hidden="true">
           <div class="deco-title"><img class="de" src="assets/left-element_1.png" alt="" aria-hidden="true"><h2 class="title">Program dňa</h2><img class="de" src="assets/right-element_1.png" alt="" aria-hidden="true"></div>
           <div class="tl" id="tl">
             <div class="tl-line"></div>
@@ -320,7 +320,7 @@ footer{position:relative;margin-top:-30px;padding:0 0 calc(16px + env(safe-area-
     <section class="center">
       <div class="rv">
         <div class="paper-card p2 bleed">
-        <img class="paper-sheet" src="assets/papier-light.webp" alt="" aria-hidden="true">
+        <img class="paper-sheet" src="assets/papier-fw.webp" alt="" aria-hidden="true">
         <img class="corner tr" src="assets/pravy-vrchny-roh.webp" alt="" aria-hidden="true">
         <img class="corner bl" src="assets/lavy-roh.webp" alt="" aria-hidden="true">
           <div class="blk">
@@ -424,7 +424,7 @@ footer{position:relative;margin-top:-30px;padding:0 0 calc(16px + env(safe-area-
     cover.classList.add('gone');
     if(main) main.classList.add('show');
     if(music) music.classList.add('show');
-    document.body.style.overflowY='auto';
+    document.body.style.overflowY='';
     startPetals();
     playHero();
   }
