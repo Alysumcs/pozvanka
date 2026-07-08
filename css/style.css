@@ -1,0 +1,203 @@
+/* ============================================================
+   Svadobné oznámenie — Michal & Janka
+   Assety: vlastné (v priečinku assets/). Kód: originálny.
+   ============================================================ */
+:root{
+  --cream:#F7F1E5; --cream-2:#EFE7D6; --paper:#FBF7EE;
+  --ink:#3A342A; --ink-soft:#7C7161;
+  --gold:#B08A4F; --gold-deep:#94713C; --gold-soft:#E4D2AC; --gold-line:#CBB587;
+  --rose:#C08A7E; --wine:#7A2338;
+  --line:#E4D8C0;
+  --display:"Cormorant Garamond",Georgia,serif;
+  --script:"Pinyon Script",cursive;
+  --body:"Jost",system-ui,sans-serif;
+  --frame:480px;
+}
+*{box-sizing:border-box}
+/* istota proti akémukoľvek rámiku na kontajneroch (input políčka to nezasiahne) */
+main,section,.rv,.content,.paper-card,.blk,.center{border:0!important;outline:0!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:#e8ddc8;color:var(--ink);font-family:var(--body);font-weight:300;
+  font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.stage{max-width:var(--frame);margin:0 auto;background:var(--cream);position:relative;
+  min-height:100vh;min-height:100dvh;overflow:hidden;box-shadow:0 40px 120px -50px rgba(58,52,42,.7)}
+h1,h2,h3{margin:0;font-weight:400;font-family:var(--display)}
+.script{font-family:var(--script);line-height:1}
+section{padding:46px 22px;position:relative}
+.center{text-align:center}
+.eyebrow{font-family:var(--body);font-weight:400;font-size:11px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold-deep)}
+.lead{color:var(--ink-soft);font-size:16px;max-width:38ch;margin:14px auto 0}
+h2.title{font-size:clamp(26px,7.5vw,38px);font-style:italic;line-height:1.1;color:var(--gold-deep)}
+.flourish{display:block;height:26px;margin:12px auto;opacity:.9}
+
+/* ── OBÁLKA / intro ── */
+#cover{position:fixed;inset:0;z-index:100;background:radial-gradient(130% 90% at 50% 8%,#fbf6ea,#EFE7D6 60%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;
+  cursor:pointer;transition:opacity .9s ease,visibility .9s;overflow:hidden}
+#cover.gone{opacity:0;visibility:hidden;pointer-events:none}
+.cover-mono{font-family:var(--display);font-style:italic;font-size:15px;letter-spacing:.28em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:22px;transition:opacity .5s}
+#cover.playing .cover-mono,#cover.playing .cover-date,#cover.playing .tap{opacity:0}
+.env-wrap{position:relative;width:min(96vw,480px);max-height:92vh;aspect-ratio:440/782;border-radius:0;overflow:hidden;
+  box-shadow:0 46px 92px -34px rgba(58,52,42,.6);animation:cfloat 5s ease-in-out infinite}
+@keyframes cfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.env-wrap video,.env-wrap .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.env-wrap .poster{background:center/cover no-repeat;z-index:1}
+.env-wrap video{z-index:2;opacity:0;transition:opacity .4s}
+#cover.playing .env-wrap video{opacity:1}
+.cover-date{margin-top:22px;font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--ink-soft);transition:opacity .5s}
+.tap{position:absolute;left:0;right:0;bottom:29%;z-index:4;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);pointer-events:none;transition:opacity .5s;animation:tapPulse 1.9s ease-in-out infinite}
+.tap svg{color:var(--gold)}
+@keyframes tapPulse{0%,100%{opacity:.5;transform:translateY(2px)}50%{opacity:1;transform:translateY(-2px)}}
+
+#main{opacity:0;transition:opacity 1s ease}
+#main.show{opacity:1}
+
+/* padajúce lupienky */
+#petals{position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:var(--frame);pointer-events:none;z-index:40;overflow:hidden}
+.petal{position:absolute;top:-6%;will-change:transform,opacity}
+
+/* ── HERO ── */
+.hero{position:relative;aspect-ratio:9/16;min-height:unset;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:13% 22px 0;overflow:hidden}
+.hero .bg,.hero video.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+.hero .bg{background:center/cover no-repeat}
+.hero video.bg{opacity:0;transition:opacity 1.6s ease}
+.hero.video-on video.bg{opacity:1}
+.hero .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(247,241,229,.32),transparent 24%,transparent 86%,rgba(247,241,229,.55))}
+.hero .content{position:relative;z-index:2;margin-top:150px}
+.hero .wed{font-family:var(--display);font-style:italic;font-size:15px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-deep)}
+.hero .names{font-family:var(--script);font-size:clamp(48px,16vw,80px);line-height:.9;color:var(--gold-deep);margin:12px 0;text-shadow:0 2px 20px rgba(247,241,229,.5)}
+.hero .names .amp{display:block;font-family:var(--display);font-style:italic;font-size:.3em;color:var(--rose);margin:2px 0}
+.hero .date{margin-top:6px;font-size:13px;letter-spacing:.38em;text-transform:uppercase;color:var(--ink-soft)}
+.hero .bottom-flowers{z-index:3}
+.scrolld{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:3;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.85}
+.scrolld .ln{width:1px;height:24px;background:linear-gradient(var(--gold-line),transparent);animation:drop 1.8s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ── papierová karta ── */
+/* papierová karta — úhľadná v stĺpci, roztrhané hore/dole, stred bez skreslenia */
+.paper-card{position:relative;width:calc(100% + 44px);margin-left:-22px;margin-right:-22px;padding:58px 30px;z-index:2;
+  border:0;
+  background:url(../assets/papier-top.webp) top center/100% auto no-repeat,
+             url(../assets/papier-bot.webp) bottom center/100% auto no-repeat,
+             #F9EEE2}
+.paper-card.p2{background:url(../assets/papier_2-top.webp) top center/100% auto no-repeat,
+             url(../assets/papier_2-bot.webp) bottom center/100% auto no-repeat,
+             #FAF1E4}
+/* kvety v rohoch — usadené v rohu, mierne cez okraj (nie vtiahnuté dovnútra) */
+.paper-card .corner{width:180px}
+.paper-card .corner.tl{top:-16px;left:-6px}
+.paper-card .corner.tr{top:-16px;right:-6px}
+.paper-card .corner.bl{bottom:-16px;left:-6px}
+.paper-card .corner.br{bottom:-16px;right:-6px}
+
+/* kvetinové rohy — predorientované, iba pulzovanie (bez prevracania) */
+.corner{position:absolute;width:128px;z-index:3;pointer-events:none;animation:pulse 4.5s ease-in-out infinite}
+.corner.tl{top:-24px;left:-18px;transform-origin:top left}
+.corner.tr{top:-24px;right:-18px;transform-origin:top right}
+.corner.bl{bottom:-24px;left:-18px;transform-origin:bottom left}
+.corner.br{bottom:-24px;right:-18px;transform-origin:bottom right}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.95}50%{transform:scale(1.06);opacity:1}}
+/* kvety cez oba spodné rohy (hero, pätička) */
+.bottom-flowers{position:absolute;left:50%;bottom:-22px;width:118%;max-width:620px;z-index:4;pointer-events:none;transform-origin:bottom center;animation:bottomPulse 4s ease-in-out infinite}
+@keyframes bottomPulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.05)}}
+
+.quote{font-family:var(--display);font-style:italic;font-size:clamp(22px,6vw,28px);line-height:1.4;color:var(--gold-deep)}
+.quote span{display:block}
+
+/* ── countdown ── */
+.cd{display:flex;justify-content:center;gap:8px;margin-top:20px}
+.cd .u{min-width:60px}
+.cd .box{font-family:var(--display);font-size:clamp(38px,12vw,50px);line-height:1;color:var(--gold-deep);background:none;border:0;padding:2px}
+.cd .lbl{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+.cd .sep{align-self:center;font-family:var(--display);font-size:24px;color:var(--gold-line)}
+
+/* ── program / timeline s pohyblivou ružou ── */
+.tl{position:relative;max-width:330px;margin:26px auto 0;padding:8px 0}
+.tl-line{position:absolute;left:50%;top:18px;bottom:18px;width:1px;background:linear-gradient(var(--gold-soft),var(--gold-line),var(--gold-soft));transform:translateX(-50%)}
+.tl-rose{position:absolute;left:50%;top:0;width:48px;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 6px 10px rgba(58,52,42,.35));transition:top .1s linear}
+.tl-row{position:relative;display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;gap:6px;padding:18px 0;min-height:56px}
+.tl-row .t{text-align:right;font-family:var(--display);font-size:22px;color:var(--gold-deep)}
+.tl-row .dot{justify-self:center;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--cream)}
+.tl-row .e{text-align:left;font-size:15px;color:var(--ink)}
+.tl-row .e small{display:block;color:var(--ink-soft);font-size:12.5px}
+
+/* ── location ── */
+.zamok{display:block;width:min(88%,320px);margin:6px auto 0}
+.mapwrap{margin-top:16px;border-radius:12px;overflow:hidden}
+.mapwrap iframe{width:100%;height:230px;border:0;display:block;filter:sepia(.28) saturate(.9) contrast(.98)}
+/* nadpis s bočnými flourishmi */
+.deco-title{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto}
+.deco-title .de{width:52px;height:auto;flex:none;opacity:.92}
+.deco-title h2{margin:0}
+.addr{margin-top:12px;font-size:14px;color:var(--ink-soft)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:400;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  padding:13px 26px;border-radius:100px;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s,color .2s;
+  border:1px solid var(--gold);color:var(--gold-deep);background:transparent}
+.btn:hover{background:var(--gold);color:#fff;transform:translateY(-2px);box-shadow:0 12px 24px -10px rgba(176,138,79,.7)}
+.btn:active{transform:translateY(0)}
+.btn--fill{background:var(--wine);color:#fff;border-color:var(--wine)}
+.btn--fill:hover{background:#5f1a2b}
+
+/* dress code paleta */
+.palette{display:flex;justify-content:center;gap:14px;margin-top:16px;flex-wrap:wrap}
+.sw .dot{width:42px;height:42px;border-radius:50%;box-shadow:0 6px 14px -6px rgba(58,52,42,.5);margin:0 auto;border:1px solid rgba(0,0,0,.06)}
+.sw .nm{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+.blk{margin-top:22px}
+.blk h3{font-family:var(--display);font-style:italic;font-size:23px;color:var(--gold-deep);margin-bottom:6px}
+.blk p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+
+/* ── RSVP ── */
+.seal{width:150px;margin:22px auto 0;cursor:pointer;display:block;transition:transform .25s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 10px 16px rgba(58,52,42,.4))}
+.seal:hover{transform:scale(1.08) rotate(-4deg)}.seal:active{transform:scale(.96)}
+.seal-hint{font-family:var(--display);font-style:italic;font-size:15px;color:var(--gold-deep);margin-top:10px;display:inline-flex;flex-direction:column;align-items:center;gap:3px;animation:hintUp 1.7s ease-in-out infinite}
+.seal-hint svg{color:var(--gold)}
+@keyframes hintUp{0%,100%{transform:translateY(5px);opacity:.5}50%{transform:translateY(-3px);opacity:1}}
+.modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(40,34,26,.55);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.modal.open{opacity:1;visibility:visible}
+.sheet{background:var(--paper);width:min(90vw,420px);border-radius:22px;padding:26px 22px calc(24px + env(safe-area-inset-bottom));max-height:88vh;overflow-y:auto;transform:translateY(14px) scale(.97);opacity:.5;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .35s;text-align:left;box-shadow:0 40px 90px -30px rgba(30,20,14,.7)}
+.modal.open .sheet{transform:none;opacity:1}
+.sheet .x{position:sticky;top:0;float:right;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--cream);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--ink-soft)}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:7px}
+.in{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:var(--cream);font-family:var(--body);font-weight:300;font-size:16px;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+.in:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(176,138,79,.16)}
+textarea.in{resize:vertical;min-height:54px}
+.seg{display:flex;gap:10px}
+.seg label{flex:1;cursor:pointer;margin:0}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg .opt{display:block;text-align:center;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--cream);font-size:14px;transition:.2s}
+.seg input:checked + .opt{background:var(--wine);color:#fff;border-color:var(--wine)}
+.rsvp-thanks{display:none;text-align:center;padding:18px 0}
+.rsvp-thanks.show{display:block}
+.rsvp-thanks .big{font-family:var(--script);font-size:44px;color:var(--gold-deep);line-height:1}
+
+/* ── footer ── */
+footer{position:relative;padding:66px 0 0;text-align:center;overflow:hidden}
+footer .eyebrow,footer .fnames,footer .credit{padding-left:24px;padding-right:24px}
+.couple-wrap{position:relative;margin-top:8px}
+.couple-full{display:block;width:100%}
+.couple-wrap .bottom-flowers{bottom:-4px}
+footer .fnames{font-family:var(--script);font-size:50px;color:var(--gold-deep);line-height:1;position:relative;z-index:2}
+.credit{margin-top:34px;font-size:11px;letter-spacing:.12em;color:var(--ink-soft);position:relative;z-index:2}
+.credit a{color:var(--gold-deep);text-decoration:none;font-weight:500}
+.credit .heart{color:var(--rose)}
+
+/* ── hudba ── */
+.music{position:fixed;z-index:60;right:calc(50% - var(--frame)/2 + 16px);bottom:16px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold-line);background:rgba(251,247,238,.92);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 22px -10px rgba(58,52,42,.6);opacity:0;transform:scale(.7);transition:.4s}
+@media(max-width:512px){.music{right:16px}}
+.music.show{opacity:1;transform:none}
+.music .bars{display:flex;gap:2.5px;align-items:flex-end;height:15px}
+.music .bars i{width:2.5px;background:var(--gold-deep);height:6px;border-radius:2px;animation:eq 1s ease-in-out infinite}
+.music .bars i:nth-child(2){animation-delay:.2s}.music .bars i:nth-child(3){animation-delay:.4s}.music .bars i:nth-child(4){animation-delay:.15s}
+.music.paused .bars i{animation-play-state:paused;height:5px}
+@keyframes eq{0%,100%{height:5px}50%{height:14px}}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .petal,.corner,.crown,.env-wrap,.scrolld .ln,.tap .chev,.music,.tl-rose{animation:none!important;transition:none}
+  #petals{display:none}
+}
